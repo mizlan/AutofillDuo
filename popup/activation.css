@@ -1,0 +1,29 @@
+.msg-area-info {
+  background-color: #f2ec77;
+  border-style: solid;
+  border-width: 0px;
+  border-left-width: 0.6rem;
+  border-left-color: #f2ea49;
+  padding: 0.7rem;
+  margin-top: 0.5rem;
+}
+
+.msg-area-error {
+  background-color: #e09d9b;
+  border-style: solid;
+  border-width: 0px;
+  border-left-width: 0.6rem;
+  border-left-color: #a83632;
+  padding: 0.7rem;
+  margin-top: 0.5rem;
+}
+
+.msg-area-success {
+  background-color: #99cf9f;
+  border-style: solid;
+  border-width: 0px;
+  border-left-width: 0.6rem;
+  border-left-color: #3a9e46;
+  padding: 0.7rem;
+  margin-top: 0.5rem;
+}
