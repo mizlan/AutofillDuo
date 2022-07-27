@@ -1,0 +1,8 @@
+{
+	"manifest_version": 3,
+	"name": "AutofillDuo",
+	"version": "0.0.1",
+	"host_permissions": [
+		"https://*.duosecurity.com/*"
+	]
+}
