@@ -50,7 +50,7 @@ waitForElm('.verify-button').then((b) => {
     inputElem.dispatchEvent(new Event('input', { bubbles: true }));
 
     // click "Verify" (sign in!)
-    // b.click()
+    b.click()
   });
 
   // click "Verify"
