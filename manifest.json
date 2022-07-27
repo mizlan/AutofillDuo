@@ -1,8 +1,23 @@
 {
-	"manifest_version": 3,
-	"name": "AutofillDuo",
-	"version": "0.0.1",
-	"host_permissions": [
-		"https://*.duosecurity.com/*"
-	]
+  "manifest_version": 3,
+  "name": "AutofillDuo",
+  "version": "1.0",
+  "permissions": [
+    "storage"
+  ],
+  "host_permissions": [
+    "https://*.duosecurity.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.duosecurity.com/*/auth/prompt",
+        "https://*.duosecurity.com/*/auth/prompt?*"
+      ],
+      "js": ["lib/jsOTP.min.js", "content.js"]
+    }
+  ],
+  "action": {
+    "default_popup": "popup/activation.html"
+  }
 }
