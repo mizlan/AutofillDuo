@@ -34,7 +34,6 @@ waitForElm('.verify-button').then((b) => {
     const hotp = new jsOTP.hotp();
     const code = hotp.getOtp(res.secret, res.count);
     chrome.storage.local.set({ 'count': res.count + 1 }, () => {});
-    chrome.storage.local.get(['secret', 'count'], () => {});
 
     // insert the HOTP code
     inputElem.value = code;
