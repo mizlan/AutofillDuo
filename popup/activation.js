@@ -1,4 +1,3 @@
-console.log('am i exist')
 window.onload = () => {
   const button = document.querySelector('button');
   const input = document.querySelector('input');
@@ -16,7 +15,6 @@ window.onload = () => {
   };
 
   button.addEventListener('click', (e) => {
-    console.log('gott it')
     const link = input.value
     const matchesFormat = link.match(new RegExp("^https://m-(?<hostcode>\\w+).duosecurity.com/activate/(?<key>\\w+)$"));
     if (matchesFormat === null) {
@@ -27,7 +25,6 @@ window.onload = () => {
     const key = matchesFormat.groups.key;
 
     const postUrl = `https://api-${hostcode}.duosecurity.com/push/v2/activation/${key}?customer_protocol=1`
-    console.log('posting to', postUrl)
 
     setMsg('info', "working on it... (don't click away)")
     fetch(postUrl, {
@@ -55,7 +52,6 @@ window.onload = () => {
       .then((resp) => resp.json())
       .then((data) => {
         setMsg('success', "the deed is done, finish activation on Duo")
-        console.log(data);
         const hotpSecret = data['response']['hotp_secret'];
         chrome.storage.local.set({ secret: hotpSecret, count: 0 }, () => {});
       }).catch((e) => {

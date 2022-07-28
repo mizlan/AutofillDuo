@@ -23,22 +23,18 @@ function waitForElm(selector) {
 // #passcode-input <input> field should already exist already
 waitForElm('.verify-button').then((b) => {
   // input element for code
-  let inputElem = document.querySelector('#passcode-input')
+  const inputElem = document.querySelector('#passcode-input');
 
   // procure HOTP code
   chrome.storage.local.get(['secret', 'count'], (res) => {
     if (!res.secret) {
       return;
     }
-    console.log('count is', res.count);
 
-    var hotp = new jsOTP.hotp();
-    var code = hotp.getOtp(res.secret, res.count);
+    const hotp = new jsOTP.hotp();
+    const code = hotp.getOtp(res.secret, res.count);
     chrome.storage.local.set({ 'count': res.count + 1 }, () => {});
-    chrome.storage.local.get(['secret', 'count'], (res) => {
-      console.log('flood')
-      console.log(res)
-    })
+    chrome.storage.local.get(['secret', 'count'], () => {});
 
     // insert the HOTP code
     inputElem.value = code;
@@ -50,7 +46,7 @@ waitForElm('.verify-button').then((b) => {
     inputElem.dispatchEvent(new Event('input', { bubbles: true }));
 
     // click "Verify" (sign in!)
-    b.click()
+    b.click();
   });
 
   // click "Verify"
