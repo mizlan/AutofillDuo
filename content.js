@@ -25,8 +25,8 @@ function waitForElm(selector) {
 // wait until "Verify" button exists; when this happens,
 // #passcode-input <input> field should already exist already
 Promise.any([
-  // account for the (seemingly) two different Duo UIs,
-  // for more information, see:
+  // account for both the Duo Universal Prompt and
+  // Traditional Prompt; for more information, see:
   // https://help.duo.com/s/article/7118?language=en_US
   waitForElm('.verify-button'),
   waitForElm('#password')
