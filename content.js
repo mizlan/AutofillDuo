@@ -21,13 +21,18 @@ function waitForElm(selector) {
 
 // wait until "Verify" button exists; when this happens,
 // #passcode-input <input> field should already exist already
-waitForElm('.verify-button').then((b) => {
+Promise.any([
+  // account for the (seemingly) two different Duo UIs
+  waitForElm('.verify-button'),
+  waitForElm('#password')
+]).then((b) => {
   // input element for code
-  const inputElem = document.querySelector('#passcode-input');
+  const inputElem = document.querySelector('.passcode-input');
 
   // procure HOTP code
   chrome.storage.local.get(['secret', 'count'], (res) => {
     if (!res.secret) {
+      // account not set up yet
       return;
     }
 
