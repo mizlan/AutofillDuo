@@ -22,17 +22,35 @@ function waitForElm(selector) {
   });
 }
 
-// wait until "Verify" button exists; when this happens,
-// #passcode-input <input> field should already exist already
+// wait until a button exists; this is either the "Verify"
+// button on the Universal Prompt, or the "Enter a passcode"
+// button on the Traditional Prompt. for more information, see:
+// https://help.duo.com/s/article/7118?language=en_US
 Promise.any([
-  // account for both the Duo Universal Prompt and
-  // Traditional Prompt; for more information, see:
-  // https://help.duo.com/s/article/7118?language=en_US
+  // * Universal Prompt
   waitForElm('.verify-button'),
+
+  // * Traditional Prompt
   waitForElm('#password')
 ]).then((button) => {
-  // input element for code, for both Traditional/Universal
-  const inputElem = document.querySelector('.passcode-input');
+
+  // if Traditional Prompt, must click the button first:
+  // it says "Enter a passcode" and then we can access input box
+  if (button.id == '#password') {
+    button.click();
+  }
+
+  // input element for code, happens to have the same class
+  // for both Traditional/Universal prompts
+  waitForElm('.passcode-input').then((inputElem) => {
+    plugInfo(inputElem, button);
+  });
+})
+
+// given HTML elements for the input box and the verification button,
+// generate a passcode, type it in, and click the button to gain access
+// fails silently, in the case when the program has not been set up yet
+function plugInfo(input, button) {
 
   // procure HOTP code
   chrome.storage.local.get(['secret', 'count'], (res) => {
@@ -48,15 +66,15 @@ Promise.any([
     chrome.storage.local.set({ 'count': res.count + 1 }, () => {});
 
     // insert the HOTP code
-    inputElem.value = code;
+    input.value = code;
 
     // important - you can look in the DOM for the [event] tag next to certain
     // HTML tags, expand that and see what events should be triggered. in this
     // case, for example, the event is needed to un-disable the "Verify" button
     // which begins greyed out
-    inputElem.dispatchEvent(new Event('input', { bubbles: true }));
+    input.dispatchEvent(new Event('input', { bubbles: true }));
 
     // click "Verify" (sign in!)
     button.click();
   });
-})
+}
