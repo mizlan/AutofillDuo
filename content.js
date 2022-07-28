@@ -40,8 +40,8 @@ Promise.any([
     button.click();
   }
 
-  // input element for code, happens to have the same class
-  // for both Traditional/Universal prompts
+  // the input element for the passcode happens to have share the same
+  // classname for both Traditional/Universal prompts: 'passcode-input'
   waitForElm('.passcode-input').then((inputElem) => {
     plugInfo(inputElem, button);
   });
