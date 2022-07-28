@@ -2,7 +2,7 @@ window.onload = () => {
   const button = document.querySelector('button');
   const input = document.querySelector('input');
   input.setAttribute('size',input.getAttribute('placeholder').length);
-  const msgArea = document.querySelector('p');
+  const msgArea = document.querySelector('#msg');
 
   const setMsg = (msgType, msg) => {
     msgArea.classList.remove('msg-area-info', 'msg-area-error', 'msg-area-success');
