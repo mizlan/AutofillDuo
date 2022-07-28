@@ -31,12 +31,12 @@ Promise.any([
   waitForElm('.verify-button'),
 
   // * Traditional Prompt
-  waitForElm('#password')
+  waitForElm('#passcode')
 ]).then((button) => {
 
   // if Traditional Prompt, must click the button first:
   // it says "Enter a passcode" and then we can access input box
-  if (button.id == '#password') {
+  if (button.id == '#passcode') {
     button.click();
   }
 
