@@ -11,8 +11,8 @@
   "content_scripts": [
     {
       "matches": [
-        "https://*.duosecurity.com/*/auth/prompt",
-        "https://*.duosecurity.com/*/auth/prompt?*"
+        "https://*.duosecurity.com/*/prompt",
+        "https://*.duosecurity.com/*/prompt?*"
       ],
       "js": ["lib/jsOTP.min.js", "content.js"]
     }
