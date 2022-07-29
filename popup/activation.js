@@ -19,7 +19,7 @@ window.onload = () => {
       // if SECRET and COUNT already exist in localstorage,
       // we've already activated the device, so don't show
       // the instructions/input box again
-      setMsg('success', 'AutofillDuo is already setup!');
+      setMsg('info', 'AutofillDuo is already setup!. To uninstall: first uninstall this extension, then remove the Duo device labeled "Pixel 3a" in your device management page.');
       return;
     } else {
       // show instructions
