@@ -21,6 +21,9 @@ window.onload = () => {
       // the instructions/input box again
       setMsg('success', 'AutofillDuo is already setup!');
       return;
+    } else {
+      // show instructions
+      document.querySelector('#pre-activation').style.display = 'block';
     }
 
     button.addEventListener('click', (e) => {
