@@ -69,7 +69,6 @@ window.onload = () => {
           const hotpSecret = data['response']['hotp_secret'];
 
           // populate localStorage
-          // TODO check for firefox compatibility
           chrome.storage.local.set({ secret: hotpSecret, count: 0 }, () => {});
 
         }).catch((e) => {
@@ -77,6 +76,4 @@ window.onload = () => {
         });
     });
   });
-
-
 }
