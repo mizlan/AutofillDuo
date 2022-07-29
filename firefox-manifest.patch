@@ -1,0 +1,27 @@
+diff --git a/manifest.json b/manifest.json
+index b6d6915..97a26e9 100644
+--- a/manifest.json
++++ b/manifest.json
+@@ -1,11 +1,9 @@
+ {
+-  "manifest_version": 3,
++  "manifest_version": 2,
+   "name": "AutofillDuo",
+   "version": "1.0",
+   "permissions": [
+-    "storage"
+-  ],
+-  "host_permissions": [
++    "storage",
+     "https://*.duosecurity.com/*"
+   ],
+   "content_scripts": [
+@@ -17,7 +15,7 @@
+       "js": ["lib/jsOTP.min.js", "content.js"]
+     }
+   ],
+-  "action": {
++  "browser_action": {
+     "default_popup": "popup/activation.html"
+   },
+   "icons": {
