@@ -1,7 +1,5 @@
 # AutofillDuo
 
-*Breeze through the Duo process*
-
 * Future-proofed with Manifest v3
 * Compatible with all Duo prompts (Universal/Traditional)
 * Fully-automatic execution, enabled by default
@@ -13,4 +11,4 @@ Caveats:
 * Does not work on mobile browsers
 
 todo
-* clean uninstall process
+* test on Traditional Prompt
