@@ -12,8 +12,11 @@
     {
       "matches": [
         "https://*.duosecurity.com/*/prompt",
-        "https://*.duosecurity.com/*/prompt?*"
+        "https://*.duosecurity.com/*/prompt?*",
+        "https://*.duosecurity.com/*/auth",
+        "https://*.duosecurity.com/*/auth?*"
       ],
+      "all_frames": true,
       "js": ["lib/jsOTP.min.js", "content.js"]
     }
   ],
