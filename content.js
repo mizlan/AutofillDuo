@@ -36,7 +36,10 @@ Promise.any([
 
   // if Traditional Prompt, must click the button first:
   // it says "Enter a passcode" and then we can access input box
-  if (button.id == '#passcode') {
+  //
+  // NOTE: it seems this isn't actually necessary, the input element
+  // exists, it's just hidden prior to clicking this button
+  if (button.id == 'passcode') {
     button.click();
   }
 
