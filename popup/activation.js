@@ -30,7 +30,7 @@ window.onload = () => {
       // utilize the not-public API to reverse-engineer the
       // process of activating a new device
       const link = input.value
-      const matchesFormat = link.match(new RegExp("^https://m-(?<hostcode>\\w+).duosecurity.com/activate/(?<key>\\w+)$"));
+      const matchesFormat = link.match(new RegExp("^https://m-(?<hostcode>\\w+).duosecurity.com/(activate|android)/(?<key>\\w+)$"));
       if (matchesFormat === null) {
         setMsg('error', "wrong format... check the format again :]")
         return;
