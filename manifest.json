@@ -2,6 +2,7 @@
   "manifest_version": 3,
   "name": "AutofillDuo",
   "version": "1.0",
+  "description": "Skip the hassle of Duo",
   "permissions": [
     "storage"
   ],
