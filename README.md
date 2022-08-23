@@ -9,6 +9,3 @@
 Caveats:
 * Will need to re-activate if you clear site data
 * Does not work on mobile browsers
-
-todo
-* test on Traditional Prompt
