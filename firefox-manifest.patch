@@ -1,13 +1,12 @@
-diff --git a/manifest.json b/manifest.json
-index b6d6915..97a26e9 100644
---- a/manifest.json
-+++ b/manifest.json
-@@ -1,11 +1,9 @@
+--- manifest.json	2022-11-18 14:02:23.000000000 -0800
++++ ../afd-ff-1.0.2/manifest.json	2022-11-18 14:34:41.000000000 -0800
+@@ -1,12 +1,10 @@
  {
 -  "manifest_version": 3,
 +  "manifest_version": 2,
    "name": "AutofillDuo",
-   "version": "1.0",
+   "version": "1.0.2",
+   "description": "Skip the hassle of Duo",
    "permissions": [
 -    "storage"
 -  ],
@@ -16,7 +15,7 @@ index b6d6915..97a26e9 100644
      "https://*.duosecurity.com/*"
    ],
    "content_scripts": [
-@@ -17,7 +15,7 @@
+@@ -21,7 +19,7 @@
        "js": ["lib/jsOTP.min.js", "content.js"]
      }
    ],
