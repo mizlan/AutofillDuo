@@ -1,7 +1,7 @@
 window.onload = () => {
   const button = document.querySelector('button');
   const input = document.querySelector('input');
-  input.setAttribute('size',input.getAttribute('placeholder').length);
+  input.setAttribute('size', input.getAttribute('placeholder').length);
   const msgArea = document.querySelector('#msg');
 
   const setMsg = (msgType, msg) => {
@@ -26,11 +26,11 @@ window.onload = () => {
       document.querySelector('#pre-activation').style.display = 'block';
     }
 
-    button.addEventListener('click', (e) => {
+    button.addEventListener('click', async (e) => {
       // utilize the not-public API to reverse-engineer the
       // process of activating a new device
       const link = input.value
-      const matchesFormat = link.match(new RegExp("^https://m-(?<hostcode>\\w+).duosecurity.com.*/(?<key>\\w+)$"));
+      const matchesFormat = link.match(new RegExp("^https://m-(?<hostcode>\\w+).duosecurity.com/(activate|android)/(?<key>\\w+)$"));
       if (matchesFormat === null) {
         setMsg('error', "wrong format... check the format again :]")
         return;
@@ -38,15 +38,40 @@ window.onload = () => {
       const hostcode = matchesFormat.groups.hostcode;
       const key = matchesFormat.groups.key;
 
+      // ref: https://stackoverflow.com/a/55188241
+      const getPublicKey = async () => {
+        const options = {
+          name: 'RSASSA-PKCS1-v1_5',
+          modulusLength: 2048,
+          publicExponent: new Uint8Array([0x01, 0x00, 0x01]),
+          hash: { name: 'SHA-512' },
+        };
+
+        const keys = await window.crypto.subtle.generateKey(
+          options,
+          false, // non-exportable (public key still exportable)
+          ['sign', 'verify'],
+        );
+
+        const publicKey = await window.crypto.subtle.exportKey('spki', keys.publicKey);
+
+        let body = window.btoa(String.fromCharCode(...new Uint8Array(publicKey)));
+        body = body.match(/.{1,64}/g).join('\n');
+
+        return `-----BEGIN PUBLIC KEY-----\n${body}\n-----END PUBLIC KEY-----`;
+      };
+
       const postUrl = `https://api-${hostcode}.duosecurity.com/push/v2/activation/${key}?customer_protocol=1`
 
       setMsg('info', "working on it... (don't click away)")
-      fetch(postUrl, {
+      const resp = await fetch(postUrl, {
         method: 'POST',
-        headers:{
+        headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         },
         body: new URLSearchParams({
+          'pkpush': 'rsa-sha512',
+          'pubkey': await getPublicKey(),
           'jailbroken': 'false',
           'architecture': 'arm64',
           'region': 'US',
@@ -63,17 +88,20 @@ window.onload = () => {
           'security_patch_level': '2021-02-01'
         })
       })
-        .then((resp) => resp.json())
-        .then((data) => {
-          setMsg('success', "the deed is done, finish activation on Duo")
-          const hotpSecret = data['response']['hotp_secret'];
 
-          // populate localStorage
-          chrome.storage.local.set({ secret: hotpSecret, count: 0 }, () => {});
+      if (!resp.ok) {
+        alert(JSON.stringify(data));
+        setMsg('error', e);
+        return;
+      }
 
-        }).catch((e) => {
-          setMsg('error', e)
-        });
+      const data = await resp.json();
+      alert(JSON.stringify(data))
+      setMsg('success', "the deed is done, finish activation on Duo")
+      const hotpSecret = data['response']['hotp_secret'];
+
+      // populate localStorage
+      chrome.storage.local.set({ secret: hotpSecret, count: 0 }, () => { });
     });
   });
 }

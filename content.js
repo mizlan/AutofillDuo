@@ -1,7 +1,7 @@
 // a function that generates a Promise given a CSS selector
 // that fulfills when the selector points to an existing element
 //
-// https://stackoverflow.com/a/61511955
+// ref: https://stackoverflow.com/a/61511955
 function waitForElm(selector) {
   return new Promise(resolve => {
     if (document.querySelector(selector)) {
